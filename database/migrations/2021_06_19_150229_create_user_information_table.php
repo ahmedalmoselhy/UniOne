@@ -18,21 +18,46 @@ class CreateUserInformationTable extends Migration
 //            General data relates to all users
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->string('name');
-            $table->string('address');
+            $table->string('address')->nullable();
+            $table->foreignId('image_id')->nullable();
+            $table->foreignId('level_id')->nullable();
 
-//            data related to students only
+//            data related to student only
             $table->date('joining_date')->nullable();
             $table->float('highschool_score')->nullable();
+//            THINK about the idea of levels
+
+//            data related to professor, assistant and employee only
+            $table->foreignId('degree_id')->nullable();
+            $table->boolean('hiring_year')->nullable();
+
+//            data related to professor only
+            $table->boolean('is_deen')->default(0);
+            $table->boolean('is_manager')->default(0);
+            $table->boolean('is_president')->default(0);
+
+
+//            data related to all personal (student_professor_assistant_employee) also (department_college)
+            $table->bigInteger('department_id')->nullable();
+            $table->bigInteger('college_id')->nullable();
+            $table->bigInteger('university_id')->nullable();
+
 
 //            data related to university and college only
             $table->date('establishment_year')->nullable();
 
-//            data related to university only
+//            data related to university and department only
             $table->boolean('is_private')->nullable()->default(0);
             $table->bigInteger('presedent_id')->nullable();
 
 //            data related to college only
-            $table->bigInteger('university_id')->nullable();
+            $table->boolean('is_verified')->default(0);
+            $table->boolean('is_credit')->default(0);
+            $table->bigInteger('deen_id')->nullable();
+
+//            data related to department only
+            $table->bigInteger('manager_id')->nullable();
+
 
             $table->timestamps();
         });
